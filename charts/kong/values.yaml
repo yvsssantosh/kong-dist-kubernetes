@@ -1,0 +1,67 @@
+# Default values for kong.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+kongName: kongapi
+kongInstanceReplicaCount: 1
+
+services:
+  proxyService:
+    externalPort: 8000
+    externalSslPort: 8443
+
+kongDashboard:
+  deploy: true
+  user: helm
+  password: helmUserPassword123%
+
+backingStoreConfig: 
+  # STRONGLY RECOMMENDED
+  # Deploy using existing backend 
+  # Use helm to install and configure either postresql or cassandra
+  # Update the configuration to point to the store 
+  # https://github.com/kubernetes/charts/tree/master/stable/postgresql or https://github.com/kubernetes/charts/tree/master/incubator/cassandra
+
+  # deployment:
+  #   deployStore: false
+  # KONG_DATABASE: postgres
+  # KONG_PG_USER: kong
+  # KONG_PG_PASSWORD: kong
+  # KONG_PG_DATABASE: kongdb
+  # KONG_PG_HOST: kongPostgresService.examplenamespace.svc.cluster.local
+  
+  # WARNING - volumes don't use persistent volumes so data is lost on pod/cluster restart. 
+  # Deploy with postgres backend: 
+
+  deployment:
+    deployStore: true
+    storeDeploymentName: kongpostgres
+  KONG_DATABASE: postgres
+  KONG_PG_USER: kong
+  KONG_PG_PASSWORD: kong
+  KONG_PG_DATABASE: kongdb
+  KONG_PG_HOST: kong-postgresql
+
+  # WARNING - volumes don't use persistent volumes so data is lost on pod/cluster restart. 
+  # Deploy with cassandra backend: 
+
+  # deployment:
+  #     deployStore: true
+  #     storeDeploymentName: kong-cassandra-dep
+  # KONG_DATABASE: cassandra
+  # KONG_CASSANDRA_CONTACT_POINTS: kong-cassandra
+  # KONG_CASSANDRA_KEYSPACE: kong
+  # KONG_CASSANDRA_REPL_FACTOR: "2"
+
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious 
+  # choice for the user. This also increases chances charts run on environments with little 
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following 
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #  cpu: 100m
+  #  memory: 128Mi
+  #requests:
+  #  cpu: 100m
+  #  memory: 128Mi
