@@ -1,7 +1,7 @@
 Usage
 ==========
 
-Firstly install helm: [https://helm.sh/](docs here)
+Firstly install helm: [docs here](https://helm.sh/)
 
 1. Clone the repository
 2. cd ./charts/kong/
