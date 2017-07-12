@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name:  {{ .Release.Name }}-{{ .Values.kongName }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.kongInstanceReplicaCount }}
   template:
     metadata:
       labels:
@@ -34,10 +34,8 @@ spec:
           - name: KONG_CASSANDRA_KEYSPACE
             value: {{ .Values.backingStoreConfig.KONG_CASSANDRA_KEYSPACE}}
           - name: KONG_CASSANDRA_REPL_FACTOR
-            value: {{ .Values.backingStoreConfig.KONG_CASSANDRA_REPL_FACTOR}}
-
-        {{ else if eq .Values.backingStoreConfig.KONG_DATABASE "postgres"}}
-          
+            value: {{ .Values.backingStoreConfig.KONG_CASSANDRA_REPL_FACTOR | quote }}
+        {{ else if eq .Values.backingStoreConfig.KONG_DATABASE "postgres"}} 
           - name: KONG_PG_DATABASE
             value: {{ .Values.backingStoreConfig.KONG_PG_DATABASE }}
           - name: KONG_PG_USER

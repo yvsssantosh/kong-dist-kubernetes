@@ -10,7 +10,7 @@ The external ip can be used with the ports listed to connect to API's hosted by 
 kubectl get services -w {{ .Release.Name }}-kongadmin
 
 //Connect to admin interface
-export PODNAME=$(kubectl get pods | grep -i ag1-kongapi | awk '{print $1}')
+export PODNAME=$(kubectl get pods | grep -i {{ .Release.Name }}-kongapi | awk '{print $1}')
 kubectl port-forward $PODNAME 8001:8001
 
 curl http://localhost:8001
