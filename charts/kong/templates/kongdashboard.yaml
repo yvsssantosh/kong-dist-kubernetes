@@ -8,7 +8,7 @@ spec:
   ports:
   - name: dashui
     targetPort: 8080
-    port: 8080
+    port: {{ .Values.kongDashboard.port }}
     protocol: TCP
   selector:
     app: {{ .Release.Name }}-kongdashboard
