@@ -36,7 +36,7 @@ backingStoreConfig:
   KONG_PG_PASSWORD: kong
   KONG_PG_DATABASE: kongdb
   KONG_PG_HOST: kong-postgresql
-  KONG_LOG_LEVEL: 
+  KONG_LOG_LEVEL: debug #Options: debug, info, notice, warn, error, crit, alert, emerg
   KONG_PG_PORT: 5432
 
 
