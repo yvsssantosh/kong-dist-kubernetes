@@ -6,15 +6,10 @@ kongName: kongapi
 kongInstanceReplicaCount: 1
 
 services:
+  adminPort: 8001
   proxyService:
     externalPort: 8000
     externalSslPort: 8443
-
-kongDashboard:
-  deploy: true
-  user: helm
-  password: helmUserPassword123%
-  port: 8080
 
 backingStoreConfig: 
   # STRONGLY RECOMMENDED
@@ -31,9 +26,8 @@ backingStoreConfig:
   # KONG_PG_DATABASE: kongdb
   # KONG_PG_HOST: kongPostgresService.examplenamespace.svc.cluster.local
   
-  # WARNING - volumes don't use persistent volumes so data is lost on pod/cluster restart. 
+  # WARNING - The solution below doesn't use persistent volumes so data is lost on pod/cluster restart. 
   # Deploy with postgres backend: 
-
   deployment:
     deployStore: true
     storeDeploymentName: kongpostgres
@@ -42,10 +36,12 @@ backingStoreConfig:
   KONG_PG_PASSWORD: kong
   KONG_PG_DATABASE: kongdb
   KONG_PG_HOST: kong-postgresql
+  KONG_LOG_LEVEL: 
+  KONG_PG_PORT: 5432
+
 
   # WARNING - volumes don't use persistent volumes so data is lost on pod/cluster restart. 
   # Deploy with cassandra backend: 
-
   # deployment:
   #     deployStore: true
   #     storeDeploymentName: kong-cassandra-dep
