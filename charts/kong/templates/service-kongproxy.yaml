@@ -8,12 +8,12 @@ spec:
   - 0.0.0.0/0
   ports:
   - name: kong-proxy
-    port: {{ .Values.services.proxyService.externalPort }}
-    targetPort: 8000
+    port: {{ .Values.services.proxyService.servicePort }}
+    targetPort: {{ .Values.services.proxyService.containerPort }}
     protocol: TCP
   - name: kong-proxy-ssl
-    port: {{ .Values.services.proxyService.externalSslPort }}
-    targetPort: 8443
+    port: {{ .Values.services.proxyService.serviceSslPort }}
+    targetPort: {{ .Values.services.proxyService.containerSslPort }}
     protocol: TCP
   selector:
     app: {{ .Release.Name }}-{{ .Values.kongName }}

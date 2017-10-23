@@ -55,17 +55,14 @@ spec:
         command: [ "/bin/sh", "-c", "KONG_CLUSTER_ADVERTISE=$(KONG_HOST_IP):7946 KONG_NGINX_DAEMON='off' kong start --vv" ]
         ports:
         - name: admin
-          containerPort: 8001
+          containerPort: {{ .Values.services.adminService.containerPort }}
+          protocol: TCP
+        - name: admin-ssl
+          containerPort: {{ .Values.services.adminService.containerSslPort }}
           protocol: TCP
         - name: proxy
-          containerPort: 8000
+          containerPort: {{ .Values.services.proxyService.containerPort }}
           protocol: TCP
         - name: proxy-ssl
-          containerPort: 8443
+          containerPort: {{ .Values.services.proxyService.containerSslPort }}
           protocol: TCP
-        - name: surf-tcp
-          containerPort: 7946
-          protocol: TCP
-        - name: surf-udp
-          containerPort: 7946
-          protocol: UDP

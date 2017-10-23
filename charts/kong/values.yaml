@@ -6,10 +6,16 @@ kongName: kongapi
 kongInstanceReplicaCount: 1
 
 services:
-  adminPort: 8001
+  adminService:
+    servicePort: 8001
+    serviceSslPort: 8444
+    containerPort: 8001
+    containerSslPort: 8444
   proxyService:
-    externalPort: 8000
-    externalSslPort: 8443
+    servicePort: 8000
+    serviceSslPort: 8443
+    containerPort: 8000
+    containerSslPort: 8443
 
 backingStoreConfig: 
   # STRONGLY RECOMMENDED

@@ -6,8 +6,12 @@ spec:
   type: ClusterIP
   ports:
   - name: kong-admin
-    port: {{ .Values.services.adminPort }}
-    targetPort: 8001
+    port: {{ .Values.services.adminService.servicePort }}
+    targetPort: {{ .Values.services.adminService.containerPort }}
+    protocol: TCP
+  - name: kong-admin-ssl
+    port: {{ .Values.services.adminService.serviceSslPort }}
+    targetPort: {{ .Values.services.adminService.containerSslPort }}
     protocol: TCP
   selector:
     app: {{ .Release.Name }}-{{ .Values.kongName }}
