@@ -1,21 +1,21 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-kongproxy
+  name: {{ .Release.Name }}-proxy
 spec:
   type: LoadBalancer
   loadBalancerSourceRanges:
   - 0.0.0.0/0
   ports:
   - name: kong-proxy
-    port: {{ .Values.services.proxyService.servicePort }}
-    targetPort: {{ .Values.services.proxyService.containerPort }}
+    port: {{ .Values.services.proxy.servicePort }}
+    targetPort: {{ .Values.services.proxy.containerPort }}
     protocol: TCP
   - name: kong-proxy-ssl
-    port: {{ .Values.services.proxyService.serviceSslPort }}
-    targetPort: {{ .Values.services.proxyService.containerSslPort }}
+    port: {{ .Values.services.proxy.serviceSSLPort }}
+    targetPort: {{ .Values.services.proxy.containerSSLPort }}
     protocol: TCP
   selector:
-    app: {{ .Release.Name }}-{{ .Values.kongName }}
+    app: {{ .Release.Name }}-{{ .Values.kongAppName }}
 
 

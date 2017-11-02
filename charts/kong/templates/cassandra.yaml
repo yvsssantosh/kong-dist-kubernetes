@@ -1,9 +1,9 @@
-{{ if and (.Values.backingStoreConfig.deployment.deployStore) (eq .Values.backingStoreConfig.KONG_DATABASE "cassandra") }}
+{{ if and (.Values.database.deployment.deployStore) (eq .Values.database.KONG_DATABASE "cassandra") }}
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-{{ .Values.backingStoreConfig.KONG_CASSANDRA_CONTACT_POINTS }}
+  name: {{ .Release.Name }}-{{ .Values.database.KONG_CASSANDRA_CONTACT_POINTS }}
 spec:
   ports:
   - name: cql
@@ -11,19 +11,19 @@ spec:
     targetPort: 9042
     protocol: TCP
   selector:
-    app: {{ .Release.Name }}-{{ .Values.backingStoreConfig.deployment.storeDeploymentName }}
+    app: {{ .Release.Name }}-{{ .Values.database.deployment.databaseName }}
 
 ---
 apiVersion: v1
 kind: ReplicationController
 metadata:
-  name: {{ .Release.Name }}-{{ .Values.backingStoreConfig.deployment.storeDeploymentName }}
+  name: {{ .Release.Name }}-{{ .Values.database.deployment.databaseName }}
 spec:
   replicas: 3
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}-{{ .Values.backingStoreConfig.deployment.storeDeploymentName }}
+        app: {{ .Release.Name }}-{{ .Values.database.deployment.databaseName }}
     spec:
       containers:
         - command:
