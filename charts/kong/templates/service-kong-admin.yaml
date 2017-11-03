@@ -3,7 +3,8 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}-admin
 spec:
-  type: ClusterIP
+  type: {{ .Values.services.type }}
+
   ports:
   - name: kong-admin
     port: {{ .Values.services.admin.servicePort }}

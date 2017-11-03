@@ -5,6 +5,7 @@ kongAppName: kong-gateway
 kongInstanceCount: 1
 
 services:
+  type: NodePort #Options: NodePort, ClusterIP
   admin:
     servicePort: 8001
     serviceSSLPort: 8444
