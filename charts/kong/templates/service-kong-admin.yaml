@@ -3,8 +3,7 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}-admin
 spec:
-  type: {{ .Values.services.type }}
-
+  type: {{ .Values.services.admin.type }}
   ports:
   - name: kong-admin
     port: {{ .Values.services.admin.servicePort }}

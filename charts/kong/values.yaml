@@ -5,17 +5,18 @@ kongAppName: kong-gateway
 kongInstanceCount: 1
 
 services:
-  type: NodePort #Options: NodePort, ClusterIP
   admin:
     servicePort: 8001
     serviceSSLPort: 8444
     containerPort: 8001
     containerSSLPort: 8444
+    type: NodePort #Options: NodePort, ClusterIP, LoadBalancer
   proxy:
     servicePort: 8000
     serviceSSLPort: 8443
     containerPort: 8000
     containerSSLPort: 8443
+    type: NodePort #Options: NodePort, ClusterIP, LoadBalancer
 
 database:
   # STRONGLY RECOMMENDED
@@ -29,7 +30,7 @@ database:
   # KONG_DATABASE: postgres
   # KONG_PG_USER: kong
   # KONG_PG_PASSWORD: kong
-  # KONG_PG_DATABASE: kongdb
+  # KONG_PG_DATABASE: kong
   # KONG_PG_HOST: postgres_service_name.example_namespace.svc.cluster.local
 
   # WARNING - The solution below doesn't use persistent volumes so data is lost on pod/cluster restart.
