@@ -25,20 +25,10 @@ database:
   # Update the configuration to point to the store
   # https://github.com/kubernetes/charts/tree/master/stable/postgresql or https://github.com/kubernetes/charts/tree/master/incubator/cassandra
 
-  # deployment:
-  #   deployStore: false
-  # KONG_DATABASE: postgres
-  # KONG_PG_USER: kong
-  # KONG_PG_PASSWORD: kong
-  # KONG_PG_DATABASE: kong
-  # KONG_PG_HOST: postgres_service_name.example_namespace.svc.cluster.local
-
-  # WARNING - The solution below doesn't use persistent volumes so data is lost on pod/cluster restart.
-  # Deploy with postgres backend:
   deployment:
     deployStore: true
     databaseName: postgres
-  KONG_DATABASE: postgres
+  KONG_DATABASE: postgres #Options: cassandra or postgres
   KONG_PG_USER: kong
   KONG_PG_PASSWORD: kong
   KONG_PG_DATABASE: kong
@@ -46,18 +36,9 @@ database:
   KONG_LOG_LEVEL: debug #Options: debug, info, notice, warn, error, crit, alert, emerg
   KONG_PG_PORT: 5432
 
-
-  # WARNING - volumes don't use persistent volumes so data is lost on pod/cluster restart.
-  # Deploy with cassandra backend:
-  # deployment:
-  #     deployStore: true
-  #     databaseName: cassandra
-  # KONG_DATABASE: cassandra
   # KONG_CASSANDRA_CONTACT_POINTS: kong-cassandra
   # KONG_CASSANDRA_PORT: 9042
   # KONG_CASSANDRA_KEYSPACE: kong
-  # KONG_CASSANDRA_REPL_FACTOR: "2"
-
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
