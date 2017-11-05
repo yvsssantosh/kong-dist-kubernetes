@@ -3,15 +3,15 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}-admin
 spec:
-  type: {{ .Values.services.admin.type }}
+  type: {{ .Values.kong.admin.type }}
   ports:
   - name: kong-admin
-    port: {{ .Values.services.admin.servicePort }}
-    targetPort: {{ .Values.services.admin.containerPort }}
+    port: {{ .Values.kong.admin.servicePort }}
+    targetPort: {{ .Values.kong.admin.containerPort }}
     protocol: TCP
   - name: kong-admin-ssl
-    port: {{ .Values.services.admin.serviceSSLPort }}
-    targetPort: {{ .Values.services.admin.containerSSLPort }}
+    port: {{ .Values.kong.admin.serviceSSLPort }}
+    targetPort: {{ .Values.kong.admin.containerSSLPort }}
     protocol: TCP
   selector:
     app: {{ .Release.Name }}-{{ .Values.kongAppName }}

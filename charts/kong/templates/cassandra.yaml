@@ -1,28 +1,28 @@
-{{ if and (.Values.database.deployment.deployStore) (eq .Values.database.KONG_DATABASE "cassandra") }}
+{{ if and (.Values.provisionDB) (.Values.kong.database.useCassandra) }}
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-{{ .Values.database.deployment.databaseName }}
+  name: {{ .Release.Name }}-{{ .Values.kong.database.name }}
 spec:
   clusterIP: None
   ports:
     - port: 9042
   selector:
-    app: {{ .Release.Name }}-{{ .Values.database.deployment.databaseName }}
+    app: {{ .Release.Name }}-{{ .Values.kong.database.names }}
 
 ---
 apiVersion: "apps/v1beta1"
 kind: StatefulSet
 metadata:
-  name: cassandra
+  name: {{ .Release.Name }}-{{ .Values.kong.database.name }}
 spec:
-  serviceName: {{ .Release.Name }}-{{ .Values.database.deployment.databaseName }}
+  serviceName: {{ .Release.Name }}-{{ .Values.kong.database.name }}
   replicas: 1
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}-{{ .Values.database.deployment.databaseName }}
+        app: {{ .Release.Name }}-{{ .Values.kong.database.name }}
     spec:
       containers:
       - name: cassandra

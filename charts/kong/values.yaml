@@ -3,8 +3,8 @@
 
 kongAppName: kong-gateway
 kongInstanceCount: 1
-
-services:
+provisionDB: true
+kong:
   admin:
     servicePort: 8001
     serviceSSLPort: 8444
@@ -17,29 +17,21 @@ services:
     containerPort: 8000
     containerSSLPort: 8443
     type: NodePort #Options: NodePort, ClusterIP, LoadBalancer
-
-database:
-  # STRONGLY RECOMMENDED
-  # Deploy using existing backend
-  # Use helm to install and configure either PostreSQL or Cassandra
-  # Update the configuration to point to the store
-  # https://github.com/kubernetes/charts/tree/master/stable/postgresql or https://github.com/kubernetes/charts/tree/master/incubator/cassandra
-
-  deployment:
-    deployStore: true
-    databaseName: postgres
-  KONG_DATABASE: postgres #Options: cassandra or postgres
-  KONG_PG_USER: kong
-  KONG_PG_PASSWORD: kong
-  KONG_PG_DATABASE: kong
-  KONG_PG_HOST: postgres
-  KONG_LOG_LEVEL: debug #Options: debug, info, notice, warn, error, crit, alert, emerg
-  KONG_PG_PORT: 5432
-
-  # KONG_CASSANDRA_CONTACT_POINTS: kong-cassandra
-  # KONG_CASSANDRA_PORT: 9042
-  # KONG_CASSANDRA_KEYSPACE: kong
-
+  logLevel: debug #Options: debug, info, notice, warn, error, crit, alert, emerg
+  database:
+    useCassandra: false
+    name: kong-database
+    postgres:
+      username: kong
+      databse: kong
+      password: kong
+      host: postgres
+      port: 5432
+    cassandra:
+      contactPoints: cassandra
+      port: 9042
+      keyspace: kong
+      replcation: 2
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
