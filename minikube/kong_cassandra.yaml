@@ -61,13 +61,13 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: kong-rc
+  name: kong-microservice
 spec:
   replicas: 3
   template:
     metadata:
       labels:
-        name: kong-rc
+        name: kong-microservice
         app: kong
     spec:
       containers:
